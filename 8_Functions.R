@@ -52,14 +52,23 @@ pg %>%
 # 2. Remove it and replace with object(s) name(s)
 # 3. Place code and argument into the function() function
 
+f_to_k <- function(tempF){
+  ((tempF - 32) * (5/9)) + 273.15
+  }
 
+f_to_k(tempF = 72)
 
 
 ## Pass-by-value: changes or objects within the function only exist within the function
 ## what happens in the function, stays in the function 
 
+f_to_k <- function(tempF){
+  k <- ((tempF - 32) * (5/9)) + 273.15
+  print("hello")
+  return(k)
+}
 
-
+m <- f_to_k(72)
 
 
 # source()ing functions ---------------------------------------------------
@@ -72,7 +81,19 @@ pg %>%
 # Say you find yourself subsetting a portion of your dataframe again and again 
 # Example: Calculate average GDP in a given country, in a given span of years, using the gapminder data
 
+gapminder %>%
+  filter(country == "Canada", year %in% c(1950:1970)) %>%
+  summarize(meanGDP = mean(gdpPercap, na.rm = TRUE))
 
+## generalize this where we change country and year range
+avgGDP <- function(cntry, yr.range){
+  gapminder %>%
+    filter(country == cntry, year %in% yr.range) %>%
+    summarize(meanGDP = mean(gdpPercap, na.rm = TRUE))
+  return(df)
+}
+
+avgGDP(cntry = "United States", yr.range = 1980:1995)
 
 
 # Challenge ---------------------------------------------------------------
