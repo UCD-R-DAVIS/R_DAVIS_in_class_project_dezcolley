@@ -27,11 +27,17 @@ mloa <- mloa %>%
     temp_F_towertop = C_to_F(temp_C_towertop)
   )
 
-## CREATING NEW COLUMNS WITH map_df
-farenheit_cols <- map_df(mloa[c("temp_C_2m", "temp_C_10m", "temp_C_towertop")], C_to_F)
+## BONUS > CREATING NEW COLUMNS WITH map_df
+farenheit_cols <- map_df(mloa[c(
+  "temp_C_2m", 
+  "temp_C_10m", 
+  "temp_C_towertop")], C_to_F)
 
 ## RENAMING COLUMNS
-colnames(farenheit_cols) <- c("temp_F_2m", "temp_F_10m", "temp_F_towertop")
+colnames(farenheit_cols) <- c(
+  "temp_F_2m", 
+  "temp_F_10m", 
+  "temp_F_towertop")
 
 ## ADDING NEW COLUMNS
 mloa <- bind_cols(mloa, farenheit_cols)
@@ -67,6 +73,14 @@ temp_F_2m...20 temp_F_10m...21 temp_F_towertop...22
 5          52.16           51.44                50.72
 6          53.60           51.98                51.08
 
+## CHALLENGE
+## USING lapply
+
+surveys %>% mutate (genusspecies = lapply(
+  1:nrow(surveys), function(i){
+    paste0(surveys$genus[i], "", surveys$species[i])
+  }
+))
 
 ## I think this is done, Thanks!
 
